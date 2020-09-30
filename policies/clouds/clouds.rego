@@ -15,3 +15,4 @@ deny[msg] {
     deny_platforms[_] == r.provider_name
     msg := sprintf("Provider %s is not allowed", [r.provider_name])
 }
+
