@@ -13,42 +13,50 @@ allowed_instance_types = {
 
 res := tfplan.resource_changes
 
-resources := [r | r = res[_]; allowed_platforms[_] == r.provider_name]
 
 
 contains(arr, elem) {
   arr[_] = elem
 }
 
+get_basename(path) = basename{
+    arr := split(path, "/")
+    basename:= arr[count(arr)-1]
+}
+
+resources := [r | r = res[_]; allowed_platforms[_] == get_basename(r.provider_name)]
 
 # Check instance types
 
 #Azure
 deny[msg] {
     r = res[_]
-    r.provider_name == "azurerm"
-    instance_types = allowed_instance_types[r.provider_name]
+    provider_name := get_basename(r.provider_name)
+    provider_name == "azurerm"
+    instance_types = allowed_instance_types[provider_name]
     not contains(instance_types, r.change.after.vm_size)
     msg := sprintf("Instance type '%s' is not allowed on cloud '%s'",
-                    [r.change.after.vm_size, r.provider_name])
+                    [r.change.after.vm_size, provider_name])
 }
 
 #EC2
 deny[msg] {
     r = res[_]
-    r.provider_name == "aws"
-    instance_types = allowed_instance_types[r.provider_name]
+    provider_name := get_basename(r.provider_name)
+    provider_name == "aws"
+    instance_types = allowed_instance_types[provider_name]
     not contains(instance_types, r.change.after.instance_type)
     msg := sprintf("Instance type '%s' is not allowed on cloud '%s'",
-                    [r.change.after.instance_type, r.provider_name])
+                    [r.change.after.instance_type, provider_name])
 }
 
 #GCE
 deny[msg] {
     r = res[_]
-    r.provider_name == "google"
-    instance_types = allowed_instance_types[r.provider_name]
+    provider_name := get_basename(r.provider_name)
+    provider_name == "google"
+    instance_types = allowed_instance_types[provider_name]
     not contains(instance_types, r.change.after.machine_type)
     msg := sprintf("Instance type '%s' is not allowed on cloud '%s'",
-                    [r.change.after.machine_type, r.provider_name])
+                    [r.change.after.machine_type, provider_name])
 }
