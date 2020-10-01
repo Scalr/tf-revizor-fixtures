@@ -19,3 +19,7 @@ variable "associate_public_ip" {
 variable "owner" {
   type    = string
 }
+
+output "superlongoutputname1234567dfjknaslkdjlasdjlaksjdaslkdsa" {
+  value = var.region
+}
