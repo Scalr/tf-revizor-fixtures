@@ -2,6 +2,10 @@ variable "run_id" {
   default = "sdsdsd"
 }
 
+variable "sleep_time" {
+  default = 30
+}
+
 resource "random_integer" "timeout" {
   min = 30
   max = 180
@@ -16,7 +20,7 @@ resource "null_resource" "wait" {
     run_id = var.run_id
   }
   provisioner "local-exec" {
-    command = "sleep 30"
+    command = "sleep ${var.sleep_time}"
   }
 }
 
