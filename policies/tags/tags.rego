@@ -27,7 +27,7 @@ deny[msg] {
     clouds_with_tags[_] == provider_name
     allowed_tags := [tag | tag := allowed_tags_key[_]; r.change.after.tags[tag]]
     count(allowed_tags) == 0
-    msg := sprintf("Owner tag not exist on %s resource '%s' containes '%s'", [provider_name, r.address, r.change.after.tags])
+    msg := sprintf("The '%s' resource '%s' must contain an 'owner' tag. Got: '%s'", [provider_name, r.address, r.change.after.tags])
 }
 
 # fix for gce
