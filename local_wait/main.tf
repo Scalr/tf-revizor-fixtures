@@ -1,13 +1,13 @@
 variable "run_id" {
-  default = "sdsdsd"
+  default = "run_id_1"
 }
 
 variable "sleep_time" {
-  default = 30
+  default = 31
 }
 
 resource "random_integer" "timeout" {
-  min = 30
+  min = 31
   max = 180
 
   keepers = {
