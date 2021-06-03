@@ -14,3 +14,10 @@
  - scalr_token - agent configuration value. Can be retrieved by creating agent-pool token in the Scalr UI.
  - scalr_url - agent configuration value. The URL of the Scalr server.
  - owner - your Scalr username (<username>@scalr.com). Required for Revizor.
+
+
+## Installation from branch
+
+In order to install agent from branch:
+ - Set `omnibus` label for PR. Ensure the package is built.
+ - Set `branch` terraform variable for this workspace in format: `feature-scalrcore-<ticket-num>`
