@@ -1,7 +1,6 @@
 package terraform
 
 import input.tfplan as tfplan
-import input.tfplan as tfplan
 
 allowed_platforms = ["aws", "azurerm", "google"]
 
