@@ -2,7 +2,7 @@
 ### Tools
  - gcloud (for retrieving package name from the bucket)
  - pyopenssl python package (for gcloud signurl)
- - terraform >= 15
+ - terraform >= 15.4
 
 ### Environment variables
  - GOOGLE_CREDENTIALS - path or content of the service account file.
