@@ -13,3 +13,17 @@ output "public_ips" {
 output "branch" {
   value = var.branch
 }
+
+
+output "package_bucket_path" {
+  value = replace(replace(data.local_file.url.content, "gs://${var.gcp_bucket}/", ""), "\n", "")
+}
+
+
+output "package_signed_url" {
+  value = replace(data.google_storage_object_signed_url.package.signed_url, "\n", "")
+}
+
+output "id" {
+  value = resource.random_id.id
+}

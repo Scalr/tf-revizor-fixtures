@@ -1,6 +1,6 @@
 terraform {
   required_version = ">=0.15.4"
-  
+
   required_providers {
     google = {
       source  = "hashicorp/google"
@@ -16,8 +16,13 @@ provider "google" {
   region  = var.gcp_region
 }
 
+resource "random_id" "id" {
+  byte_length = 8
+}
+
 locals {
   owner = replace(var.owner, ".", "-")
+  id = resource.random_id.id.hex
 }
 
 
@@ -26,9 +31,17 @@ data "google_compute_image" "centos_7" {
   project = "centos-cloud"
 }
 
+data "google_storage_object_signed_url" "package" {
+  bucket       = var.gcp_bucket
+  path         = replace(replace(data.local_file.url.content, "gs://${var.gcp_bucket}/", ""), "\n", "")
+  http_method  = "GET"
+  duration     = "1h"
+}
+
+
 resource "google_compute_instance" "agent" {
   count        = var.agents_count
-  name         = "${local.owner}-scalr-agent-${count.index}"
+  name         = "${local.owner}-scalr-agent-${count.index}-${local.id}"
   machine_type = var.gcp_machine_type
   zone         = var.gcp_zone
   network_interface {
@@ -45,7 +58,7 @@ resource "google_compute_instance" "agent" {
     scalr_token      = var.scalr_token
     scalr_url        = var.scalr_url
     scalr_agent_name = var.scalr_agent_name
-    package_url      = regex("https://.*", data.local_file.url.content)
+    package_url      = data.google_storage_object_signed_url.package.signed_url
   })
 
   metadata = {

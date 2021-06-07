@@ -2,9 +2,9 @@ locals {
   filename = "signed_url_stdout.txt"
 }
 
-resource "null_resource" "latest_package_url" {
+resource "null_resource" "latest_package" {
   provisioner "local-exec" {
-    command = "pip install pyopenssl && gsutil signurl -d 1d -u $(gsutil ls -l  gs://${var.gcp_bucket}/omnibus/pkg/${var.branch}/el/7/scalr-agent-*.rpm | sort -k 2 | tail -n 2 | head -1 | cut -d ' ' -f 6) > ${local.filename}"
+    command = "gsutil ls -l  gs://${var.gcp_bucket}/omnibus/pkg/${var.branch}/el/7/scalr-agent-*.rpm | sort -k 2 | tail -n 2 | head -1 | cut -d ' ' -f 6 > ${local.filename}"
   }
   triggers = {
     keep = formatdate("DD-MM-YYYY", timestamp())
@@ -13,5 +13,5 @@ resource "null_resource" "latest_package_url" {
 
 data "local_file" "url" {
   filename   = local.filename
-  depends_on = [null_resource.latest_package_url]
+  depends_on = [null_resource.latest_package]
 }
