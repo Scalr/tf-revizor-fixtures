@@ -50,6 +50,12 @@ variable "agents_count" {
   default = 1
 }
 
+variable "agent_version" {
+  type = string
+  description = "Agent version in format: 'x.x.x'. If not specified - latest version will be installed."
+  default = null
+}
+
 
 # Agent configuration
 

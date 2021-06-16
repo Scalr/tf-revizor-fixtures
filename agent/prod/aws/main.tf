@@ -13,6 +13,10 @@ provider "aws" {
   profile = var.aws_profile
 }
 
+locals {
+  package_name = var.agent_version != null ? join("-", ["scalr-agent", var.agent_version]): "scalr-agent"
+}
+
 
 data "aws_ami" "centos" {
   owners      = ["679593333241"]  # centos organization
@@ -52,6 +56,7 @@ resource "aws_instance" "scalr_agent" {
   user_data = templatefile("install_agent_scalr_repo.bash.tpl", {
     scalr_token=var.scalr_token
     scalr_url=var.scalr_url
+    scalr_agent_package_name=local.package_name
     scalr_agent_name="${var.agent_name_prefix}-${count.index}"
   })
 
