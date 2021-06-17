@@ -29,14 +29,9 @@ resource "google_compute_instance" "default" {
    }
 boot_disk {
  initialize_params {
-    image = "chef-centos7-devel"
+    image = "centos-7-v20210609"
    }
   }
  }
 
 data "google_client_config" "current" {}
-
-data "google_container_engine_versions" "default" {
-  project = "scalr-labs"
-  location = "us-central1-a"
-}
