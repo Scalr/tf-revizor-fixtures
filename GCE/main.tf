@@ -1,7 +1,5 @@
 provider "google" {
-  credentials = var.scalr_google_credentials
-  project     = var.scalr_google_project
-  }
+}
 
 # Create defaul network subnetwork
 /* resource "google_compute_network" "default" {
