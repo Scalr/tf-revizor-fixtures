@@ -15,7 +15,7 @@ resource "google_compute_subnetwork" "default" {
 }*/
   
 resource "google_compute_instance" "default" {
-  name         = "tf-test-gce"
+  name         = var.instance_name
   machine_type = "n1-standard-1"
   zone         = "us-central1-a"
    network_interface {
