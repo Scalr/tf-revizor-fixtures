@@ -25,11 +25,11 @@ resource "google_compute_instance" "default" {
     }
    }
   labels = {
-    owner = "revizor"  
-   }
+    owner = var.owner
+  }
 boot_disk {
  initialize_params {
-    image = "centos-7-v20210609"
+    image = "centos-cloud/centos-7"
    }
   }
  }
