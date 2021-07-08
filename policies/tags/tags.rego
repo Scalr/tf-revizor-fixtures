@@ -3,7 +3,7 @@ package terraform
 import input.tfplan as tfplan
 
 
-allowed_platforms = ["aws", "azurerm", "google"]
+allowed_platforms = ["azurerm", "google"]
 allowed_tags_key = ["owner", "test-env-owner"]
 clouds_with_tags = ["aws", "azurerm"]
 
