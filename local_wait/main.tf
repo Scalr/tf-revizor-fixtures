@@ -21,7 +21,7 @@ resource "null_resource" "wait" {
     run_id = var.run_id
   }
   provisioner "local-exec" {
-    command = "env"
+    command = "sleep ${var.sleep_time}"
   }
 }
 
