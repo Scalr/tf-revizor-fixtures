@@ -6,7 +6,7 @@ allowed_platforms = ["aws", "azurerm", "google"]
 
 
 allowed_instance_types = {
-    "aws": ["t1.micro", "t1.small", "t2.nano", "t2.small"],
+    "aws": ["m3.micro", "m3.small", "m3.nano", "m3.small", "t1.small"],
     "google": ["f1-micro", "n1-standard-1", "n1-standard-2"],
     "azurerm": ["Basic_A0", "Basic_A1", "Basic_A2", "Standard_D1_v2", "Standard_DS1_v2", "Standard_DS2_v2"]
 }
